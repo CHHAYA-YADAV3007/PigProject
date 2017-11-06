@@ -25,9 +25,9 @@ longitude:float,
 location:chararray
 );
 
-B = FOREACH A GENERATE id as id,case_number AS case_number, fbicode as fbicode;
+B = FOREACH A GENERATE fbicode as fbicode, case_number AS case_number;
 
-C = FILTER B BY fbicode IS NOT NULL AND id IS NOT NULL AND case_number IS NOT NULL ;
+C = FILTER B BY fbicode IS NOT NULL AND case_number IS NOT NULL ;
 
 D = GROUP C BY fbicode;
 
@@ -36,4 +36,5 @@ E = FOREACH D GENERATE group,COUNT(C.fbicode);
 STORE E INTO '/user/cloudera/chhaya/pig_first_project/pigqueryoutput1.txt';
 
 DUMP E;
+
 
