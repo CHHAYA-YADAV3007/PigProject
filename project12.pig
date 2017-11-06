@@ -25,17 +25,16 @@ longitude:float,
 location:chararray
 );
 
-B = FOREACH A GENERATE id as id,case_number AS cr, fbicode as fc;
+B = FOREACH A GENERATE case_number AS cr, fbicode as fc;
 
-C = FILTER B BY id IS NOT NULL AND cr IS NOT NULL AND fc IS NOT NULL;
+C = FILTER B BY cr IS NOT NULL AND fc == ‘32’;
 
 D = GROUP C BY fc;
 
 E = FOREACH D GENERATE group as fcode,COUNT(C.fc) as totalcount ;
 
-F = FILTER E BY fcode  == '32';
+STORE E INTO '/user/cloudera/chhaya/pig_first_project/pigqueryoutput2.txt';
 
-STORE F INTO '/user/cloudera/chhaya/pig_first_project/pigqueryoutput2.txt';
+DUMP E;
 
-DUMP F;
 
