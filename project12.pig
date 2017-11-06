@@ -25,9 +25,9 @@ longitude:float,
 location:chararray
 );
 
-B = FOREACH A GENERATE case_number AS cr, fbicode as fc;
+B = FOREACH A GENERATE fbicode as fc ,case_number AS cr  ;
 
-C = FILTER B BY cr IS NOT NULL AND fc == ‘32’;
+C = FILTER B BY cr IS NOT NULL AND fc == '32';
 
 D = GROUP C BY fc;
 
@@ -36,5 +36,4 @@ E = FOREACH D GENERATE group as fcode,COUNT(C.fc) as totalcount ;
 STORE E INTO '/user/cloudera/chhaya/pig_first_project/pigqueryoutput2.txt';
 
 DUMP E;
-
 
